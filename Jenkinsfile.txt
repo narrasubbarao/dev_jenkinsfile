@@ -1,0 +1,12 @@
+pipeline {
+agent any
+stages{
+stage('compile') {
+steps{
+withMaven(maven : 'apache-maven-3.5.0'){
+sh 'mvn compile'
+}
+}
+}
+}
+}

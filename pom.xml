@@ -32,9 +32,35 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
+  <distributionManagement>
+  <snapshotRepository>
+    <id>csc_1</id>
+    <url>http://localhost:8082/repository/csc_1/</url>
+  </snapshotRepository>
+</distributionManagement>
+<profiles>
+<profile>
+<id>test</id>
   <build>
     <plugins>
+	<plugin>
+           <artifactId>maven-antrun-plugin</artifactId>
+           <executions>
+             <execution>
+			 <id>id.test</id>
+               <phase>test</phase>
+               <goals>
+                 <goal>run</goal>
+               </goals>
+               <configuration>
+                 <tasks>
+                   <delete file="${project.build.outputDirectory}/environment.dev.properties"/>
+                   <copy file="src/main/resources/environment.test.properties"tofile="${project.build.outputDirectory}/environment.dev.properties"/>
+                 </tasks>
+               </configuration>
+             </execution>
+           </executions>
+         </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-scm-plugin</artifactId>
@@ -46,6 +72,8 @@
       </plugin>
 	  </plugins>
   </build>
+  </profile>
+  </profiles>
   <scm>
     <connection>scm:svn:https://user-PC/svn/opstree/trunk</connection>
     <developerConnection>scm:svn:https://user-PC/svn/opstree/trunk</developerConnection>

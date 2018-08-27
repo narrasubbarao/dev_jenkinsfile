@@ -1,0 +1,41 @@
+<project name="antproject" default="war">
+<!--taskdef name="deploy" classname="org.apache.catalina.Deploy Task"/>
+<taskdef name="stop" classname="org.apache.catalina.StopTask"/>
+<taskdef name="undeploy" classname="org.apache.catalina.UnDeploy Task"/>
+<taskdef name="start" classname="org.apache.catalina.Start Task"/-->
+<import file="one.xml"/>
+<property name="build_dir" value="build/test/classes"/>
+<property name="version" value="1.1"/>
+<target name="echo" depends="init">
+<echo>this is sample message</echo>
+<echo>this  sample message</echo>
+<echo>this aresample message</echo>
+</target>
+<target name="clean" depends="echo">
+<delete dir="${build_dir}"/>
+</target>
+<target name="create" depends="clean">
+<mkdir dir="${build_dir}"/>
+</target>
+<target name="compile" depends="create">
+<javac srcdir="source" destdir="${build_dir}"/>
+</target>
+<target name="package" depends="compile">
+<jar destfile="package/${version}.jar" basedir="${build_dir}"/>
+</target>
+<target name="war" depends="package">
+<zip destfile="war/${version}.war" basedir="${build_dir}"/>
+</target>
+<!--target name="deploy" depends="undeploy">
+<deploy url="http://localhost:8081/manager/text" username="tomcat" passwd="tomcat" path="/app1.0" war="file:war/app1.0.war"/>
+</target>
+<target name="stop" depends="war">
+<stop url="http://localhost:8081/manager/text" username="tomcat" passwd="tomcat" path="/app1.0"/>
+</target>
+<target name="uneploy" depends="stop">
+<undeploy url="http://localhost:8081/manager/text" username="tomcat" passwd="tomcat" path="/app1.0"/>
+</target>
+<target name="start" depends="deploy">
+<start url="http://localhost:8081/manager/text" username="tomcat" passwd="tomcat" path="app1.0"/>
+</target-->
+</project>

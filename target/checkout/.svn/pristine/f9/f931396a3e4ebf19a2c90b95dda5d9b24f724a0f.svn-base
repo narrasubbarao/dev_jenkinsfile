@@ -1,0 +1,25 @@
+<project name="multi" default="compile">
+<property file="dev.properties"/>
+<property name="build_out" value="build1/java1/classes1"/>
+<property name="version" value="1.1"/>
+<target name="init">
+<echo> is message is done</echo>
+</target>
+<target name="clean" depends="init">
+<delete dir="${build_out}"/>
+</target>
+<target name="create" depends="clean">
+<mkdir dir="${build_out}"/>
+</target>
+<target name="compile" depends="create">
+<ant antfile="build.xml" target="war"/>
+<javac srcdir="source1" destdir="${build_out}"/>
+</target>
+<target name="package" depends="compile">
+<jar destfile="package1/app${version}.jar" basedir="${build_out}"/>
+</target>
+<target name="war" depends="package">
+<zip destfile="war/app${version}war" basedir="package1"/>
+</target>
+
+</project>
